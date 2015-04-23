@@ -25,7 +25,7 @@ public class WebInit implements WebApplicationInitializer {
                 new AnnotationConfigWebApplicationContext();
 
         /* Set displayed name of the application */
-        rootContext.setDisplayName("Exemple Restful Project");
+        rootContext.setDisplayName("Example Restful Project");
 
         /* Registers the application configuration with the root context */
         rootContext.register(AppConfig.class);

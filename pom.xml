@@ -2,19 +2,21 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.hosuaby</groupId>
-    <artifactId>exemple-restful-project</artifactId>
+    <artifactId>example-restful-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Exemple Restful Project</name>
-    <description>Attempt to create the most sophisticated exemple of RESTful application with Spring.</description>
+    <name>Example Restful Project</name>
+    <description>Attempt to create the most sophisticated example of RESTful application with Spring.</description>
 
     <properties>
         <java.version>1.8</java.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <servlet.version>3.1.0</servlet.version>
+        <swagger-springmvc.version>1.0.2</swagger-springmvc.version>
 
         <!-- Plugins versions -->
         <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <maven-war-plugin.version>2.6</maven-war-plugin.version>
     </properties>
 
     <dependencies>
@@ -31,19 +33,36 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.version}</version>
         </dependency>
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>com.mangofactory</groupId>
+            <artifactId>swagger-springmvc</artifactId>
+            <version>${swagger-springmvc.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${maven-war-plugin.version}</version>
+                <configuration>
+                    <!-- To not fail because of missing web.xml file -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml> 
+                </configuration>
             </plugin>
         </plugins>
     </build>

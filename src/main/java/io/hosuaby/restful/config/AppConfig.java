@@ -1,5 +1,6 @@
 package io.hosuaby.restful.config;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,4 +10,5 @@ import org.springframework.context.annotation.Configuration;
  * @author Alexei KLENIN
  */
 @Configuration
+@ComponentScan("io.hosuaby.restful.services")
 public class AppConfig {}

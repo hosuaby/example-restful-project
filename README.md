@@ -5,3 +5,4 @@ Attempt to create the most sophisticated example of RESTful application with Spr
 :blush: Java 8  
 :blush: Tomcat 8  
 :blush: Pure Java-based configuration  
+:blush: Springfox (Swagger)  

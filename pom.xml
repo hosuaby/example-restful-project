@@ -1,23 +1,32 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+            http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>io.hosuaby</groupId>
     <artifactId>example-restful-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Example Restful Project</name>
-    <description>Attempt to create the most sophisticated example of RESTful application with Spring.</description>
+    <description>
+        Attempt to create the most sophisticated example of RESTful application
+        with Spring.
+    </description>
+
+    <!-- Inherit defaults from Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.3.RELEASE</version>
+    </parent>
 
     <properties>
         <java.version>1.8</java.version>
-        <spring.version>4.1.6.RELEASE</spring.version>
-        <servlet.version>3.1.0</servlet.version>
+        <jetty.version>9.3.0.M2</jetty.version>
+        <servlet-api.version>3.1.0</servlet-api.version>
         <springfox.version>2.0.0</springfox.version>
-        <jackson.version>2.5.2</jackson.version>
-
-        <!-- Plugins versions -->
-        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
-        <maven-war-plugin.version>2.6</maven-war-plugin.version>
     </properties>
 
     <repositories>
@@ -31,25 +40,45 @@
     </repositories>
 
     <dependencies>
-        <!-- Spring -->
+
+        <!-- Spring Boot -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+
+                <!-- Exclude Tomcat to use Jetty -->
+                <exclusion>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                </exclusion>
+
+                <!-- To not have problem with missing JSP -->
+                <exclusion>
+                    <artifactId>hibernate-validator</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        
+
+        <!-- Spring Boot on Jetty -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+            <exclusions>
+                <exclusion>
+
+                    <!-- I don't like JSP -->
+                    <artifactId>jetty-jsp</artifactId>
+                    <groupId>org.eclipse.jetty</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- Spring websocket -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <!-- Servlet API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.version}</version>
         </dependency>
 
         <!-- Springfox (Swagger) -->
@@ -65,36 +94,15 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox.version}</version>
         </dependency>
-
-        <!-- Jackson core -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
 
+            <!-- Package as an executable jar -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${maven-war-plugin.version}</version>
-                <configuration>
-                    <!-- To not fail because of missing web.xml file -->
-                    <failOnMissingWebXml>false</failOnMissingWebXml> 
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

@@ -16,9 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableWebMvc                   // tells that this is Spring MVC configuration
 @EnableSwagger2                 // enable Swagger
-@ComponentScan(
-        "io.hosuaby.restful.controllers"    // base package for controllers
-)
+@ComponentScan({
+        "io.hosuaby.restful.controllers",    // base package for controllers
+        "io.hosuaby.restful.services"        // base package for services
+})
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     /**
@@ -27,7 +28,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-      configurer.enable();
     }
 
 }

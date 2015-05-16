@@ -10,5 +10,5 @@ import org.springframework.context.annotation.Configuration;
  * @author Alexei KLENIN
  */
 @Configuration
-@ComponentScan("io.hosuaby.restful.services")
+@ComponentScan("io.hosuaby.broker.services")
 public class AppConfig {}

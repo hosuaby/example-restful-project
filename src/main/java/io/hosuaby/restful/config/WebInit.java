@@ -37,6 +37,7 @@ public class WebInit implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext dispatcherContext =
                            new AnnotationConfigWebApplicationContext();
         dispatcherContext.register(WebMvcConfig.class);
+        dispatcherContext.register(WebSocketConfig.class);
 
         /* Register and map the dispatcher servlet */
         ServletRegistration.Dynamic dispatcher = container.addServlet(

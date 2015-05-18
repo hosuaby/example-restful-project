@@ -8,7 +8,7 @@
     <groupId>io.hosuaby</groupId>
     <artifactId>example-restful-project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>Example Restful Project</name>
     <description>
         Attempt to create the most sophisticated example of RESTful application

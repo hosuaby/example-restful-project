@@ -24,6 +24,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <spring-data.version>1.4.1.RELEASE</spring-data.version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <springfox.version>2.0.0</springfox.version>
     </properties>
@@ -84,6 +85,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
+        </dependency>
+
+        <!-- Spring Data just for CrudRepository interface -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons-core</artifactId>
+            <version>${spring-data.version}</version>
         </dependency>
 
         <!-- Springfox (Swagger) -->

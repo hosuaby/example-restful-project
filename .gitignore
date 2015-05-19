@@ -10,3 +10,5 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .README.md.html
+.idea/
+example-restful-project.iml

@@ -1,0 +1,17 @@
+                                            (
+                                 _           ) (
+                              _,(_)._        ((
+                         ___,(_______).        )
+                       ,'__.           \    /\_
+                      /,' /             \  /  /
+                     | | |              |,'  /
+                      \`.|                  /
+                       `. :                /
+                         `.              ,'
+                           `-.________,-'
+
+       example-restful-project (with teapots)${application.formatted-version}
+       Runs on Spring Boot${spring-boot.formatted-version}
+
+       Teapot ASCII art from vlinders@rcl.wau.nl (meindert de jong <^_^>)
+       http://www.ascii-art.de/ascii/t/teapot.txt

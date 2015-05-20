@@ -12,4 +12,4 @@ Attempt to create the most sophisticated example of RESTful application with Spr
 
 ## Demo
 Demo runs on [Heroku](https://www.heroku.com/).  
-Find Swagger UI [here](https://example-restful-project.herokuapp.com/swagger-ui.html).
+Find Swagger UI [here](http://petstore.swagger.io/?url=https://example-restful-project.herokuapp.com/v2/api-docs).

@@ -1,7 +1,11 @@
 package io.hosuaby.restful;
 
+import javax.servlet.Filter;
+
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -14,20 +18,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2                 // enable Swagger
 public class Application {
 
-    private static final String DEFAULT_PORT = "8080";
-
     public static void main(String[] args) {
-
-        /* For Heroku: get port from environment */
-        // TODO: check if possible to change default port variable of Spring
-        //       Boot
-        String webPort = System.getenv("PORT");
-        if (webPort == null || webPort.isEmpty()) {
-            webPort = DEFAULT_PORT;
-        }
-        System.setProperty("server.port", webPort);
-
         SpringApplication.run(Application.class, args);     // run!
+    }
+
+    /**
+     * @return Jetty CORS filter.
+     */
+    @Bean
+    public Filter corsFilter() {
+        return new CrossOriginFilter();
     }
 
 }

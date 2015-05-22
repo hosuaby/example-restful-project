@@ -1,8 +1,9 @@
 package io.hosuaby.restful;
 
+import io.hosuaby.restful.config.SimpleCorsFilter;
+
 import javax.servlet.Filter;
 
-import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +24,11 @@ public class Application {
     }
 
     /**
-     * @return Jetty CORS filter.
+     * @return simple CORS filter.
      */
     @Bean
     public Filter corsFilter() {
-        return new CrossOriginFilter();
+        return new SimpleCorsFilter();
     }
 
 }

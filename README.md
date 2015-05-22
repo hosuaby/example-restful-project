@@ -2,13 +2,13 @@
 Attempt to create the most sophisticated example of RESTful application with Spring.
 
 ## Features
-:blush: Java 8  
-:blush: Pure Java-based configuration  
-:blush: Spring Boot(on Jetty 9)  
-:blush: Spring MVC Restful  
-:blush: Spring WebSocket  
-:blush: Springfox (Swagger)  
-:blush: Heroku  
+- Java 8
+- Pure Java-based configuration
+- Spring Boot(on Undertow 1.1.3)
+- Spring MVC (Restful)
+- Spring WebSocket
+- Springfox (Swagger)
+- Cloud oriented (Heroku)
 
 ## Demo
 Demo runs on [Heroku](https://www.heroku.com/).  

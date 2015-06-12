@@ -30,8 +30,107 @@ public class TeapotCRUDServiceImpl implements TeapotCRUDService {
 
     /** {@inheritDoc} */
     @Override
+    public synchronized Teapot find(String id) throws TeapotNotExistsException {
+        if (teapotRepository.exists(id)) {
+            return teapotRepository.findOne(id);
+        } else {
+            throw new TeapotNotExistsException(id);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized Collection<Teapot> findAll() {
+        Iterable<Teapot> iterable = teapotRepository.findAll();
+        Collection teapots = new HashSet<Teapot>();
+
+        iterable.forEach(teapot -> teapots.add(teapot));
+
+        return teapots;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized Collection<Teapot> findAll(String[] ids)
+            throws TeapotsNotExistException {
+        Collection<Teapot> found = new HashSet<>();     // found teapots
+        Collection<String> notFound = new HashSet<>();  // not found teapots
+
+        Arrays.asList(ids).forEach(id -> {
+            if (teapotRepository.exists(id)) {
+                found.add(teapotRepository.findOne(id));
+            } else {
+                notFound.add(id);
+            }
+        });
+
+        if (!notFound.isEmpty()) {
+            throw new TeapotsNotExistException(notFound);
+        }
+
+        return found;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized boolean exists(String id) {
+        return teapotRepository.exists(id);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized boolean exists(Teapot teapot) {
+        return teapotRepository.exists(teapot.getId());
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public synchronized long count() {
         return teapotRepository.count();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void add(Teapot teapot)
+            throws TeapotAlreadyExistsException {
+        if (!teapotRepository.exists(teapot.getId())) {
+            teapotRepository.save(teapot);
+        } else {
+            throw new TeapotAlreadyExistsException(teapot.getId());
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void add(Collection<Teapot> teapots)
+            throws TeapotsAlreadyExistException {
+        Collection<Teapot> existing = (Collection<Teapot>) teapots
+            .stream()
+            .filter(teapot -> teapotRepository.equals(teapot.getId()));
+
+        if (!existing.isEmpty()) {
+            throw new TeapotsAlreadyExistException(existing);
+        }
+
+        teapotRepository.save(teapots);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized void update(String id, Teapot teapot)
+            throws TeapotNotExistsException, TeapotAlreadyExistsException {
+        if (!teapotRepository.exists(id)) {
+            throw new TeapotNotExistsException(id);
+        }
+
+        if (!teapot.getId().equals(id)) {
+            if (teapotRepository.exists(teapot.getId())) {
+                throw new TeapotAlreadyExistsException(teapot.getId());
+            }
+        }
+
+        teapotRepository.delete(id);
+        teapotRepository.save(teapot);
     }
 
     /** {@inheritDoc} */
@@ -71,7 +170,7 @@ public class TeapotCRUDServiceImpl implements TeapotCRUDService {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized void delete(Collection<? extends Teapot> teapots)
+    public synchronized void delete(Collection<Teapot> teapots)
             throws TeapotsNotExistException {
         Collection<? extends Teapot> notFound =
                 (Collection<? extends Teapot>) teapots
@@ -91,75 +190,4 @@ public class TeapotCRUDServiceImpl implements TeapotCRUDService {
         teapotRepository.deleteAll();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public synchronized Collection<Teapot> findAll() {
-        return (Collection<Teapot>) teapotRepository.findAll();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public synchronized Collection<Teapot> findAll(String[] ids)
-            throws TeapotsNotExistException {
-        Collection<Teapot> found = new HashSet<>();     // found teapots
-        Collection<String> notFound = new HashSet<>();  // not found teapots
-
-        Arrays.asList(ids).forEach(id -> {
-            if (teapotRepository.exists(id)) {
-                found.add(teapotRepository.findOne(id));
-            } else {
-                notFound.add(id);
-            }
-        });
-
-        if (!notFound.isEmpty()) {
-            throw new TeapotsNotExistException(notFound);
-        }
-
-        return found;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public synchronized boolean exists(String id) {
-        return teapotRepository.exists(id);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public synchronized <S extends Teapot> void save(S teapot) {
-        teapotRepository.save(teapot);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public synchronized <S extends Teapot> void save(Collection<S> teapots) {
-        teapotRepository.save(teapots);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public synchronized <S extends Teapot> void add(S teapot)
-            throws TeapotAlreadyExistsException {
-        if (!teapotRepository.exists(teapot.getId())) {
-            teapotRepository.save(teapot);
-        } else {
-            throw new TeapotAlreadyExistsException(teapot.getId());
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public synchronized <S extends Teapot> void add(Collection<S> teapots)
-            throws TeapotsAlreadyExistException {
-        Collection<S> existing = (Collection<S>) teapots
-            .stream()
-            .filter(teapot -> teapotRepository.equals(teapot.getId()));
-
-        if (!existing.isEmpty()) {
-            throw new TeapotsAlreadyExistException(existing);
-        }
-
-        teapotRepository.save(teapots);
-    }
 }

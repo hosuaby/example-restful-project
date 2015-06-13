@@ -30,7 +30,7 @@ public class TeapotCRUDServiceImpl implements TeapotCRUDService {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized Teapot find(String id) throws TeapotNotExistsException {
+    public Teapot find(String id) throws TeapotNotExistsException {
         if (teapotRepository.exists(id)) {
             return teapotRepository.findOne(id);
         } else {
@@ -40,7 +40,7 @@ public class TeapotCRUDServiceImpl implements TeapotCRUDService {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized Collection<Teapot> findAll() {
+    public Collection<Teapot> findAll() {
         Iterable<Teapot> iterable = teapotRepository.findAll();
         Collection teapots = new HashSet<Teapot>();
 
@@ -51,7 +51,7 @@ public class TeapotCRUDServiceImpl implements TeapotCRUDService {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized Collection<Teapot> findAll(String[] ids)
+    public Collection<Teapot> findAll(String[] ids)
             throws TeapotsNotExistException {
         Collection<Teapot> found = new HashSet<>();     // found teapots
         Collection<String> notFound = new HashSet<>();  // not found teapots
@@ -73,19 +73,19 @@ public class TeapotCRUDServiceImpl implements TeapotCRUDService {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized boolean exists(String id) {
+    public boolean exists(String id) {
         return teapotRepository.exists(id);
     }
 
     /** {@inheritDoc} */
     @Override
-    public synchronized boolean exists(Teapot teapot) {
+    public boolean exists(Teapot teapot) {
         return teapotRepository.exists(teapot.getId());
     }
 
     /** {@inheritDoc} */
     @Override
-    public synchronized long count() {
+    public long count() {
         return teapotRepository.count();
     }
 

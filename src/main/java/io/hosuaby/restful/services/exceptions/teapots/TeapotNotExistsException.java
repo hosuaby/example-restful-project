@@ -12,7 +12,7 @@ public class TeapotNotExistsException extends Exception {
     /**
      * When teapot with defined id not exists.
      */
-    private static final String ERR_TEAPOT_WITH_ID_NOT_EXISTS = "Teapot with id %s not exists";
+    private static final String ERR_TEAPOT_WITH_ID_NOT_EXISTS = "Teapot with id \"%s\" not exists";
 
     /**
      * When defined {@link Teapot} not exists.

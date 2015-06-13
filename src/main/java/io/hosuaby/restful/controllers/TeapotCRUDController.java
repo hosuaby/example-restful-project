@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -130,7 +131,7 @@ public class TeapotCRUDController {
             method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody Teapot teapot)
+    public void add(@RequestBody @Valid Teapot teapot)
             throws TeapotAlreadyExistsException {
         crud.add(teapot);
     };
@@ -153,7 +154,7 @@ public class TeapotCRUDController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(
             @PathVariable String id,
-            @RequestBody Teapot teapot)
+            @RequestBody @Valid Teapot teapot)
                     throws TeapotNotExistsException,
                         TeapotAlreadyExistsException {
         crud.update(id, teapot);

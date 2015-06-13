@@ -1,18 +1,20 @@
 package io.hosuaby.restful.controllers;
 
+import io.hosuaby.restful.domain.validators.TeapotValidator;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotAlreadyExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotsAlreadyExistException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotsNotExistException;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.InitBinder;
 
 /**
  * Exception handler for all controllers.
@@ -23,71 +25,100 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GlobalExceptionHandler {
 
     /**
+     * Teapot validator.
+     */
+    @Autowired
+    private TeapotValidator teapotValidator;
+
+    /**
+     * Adds {@link TeapotValidator} to WebDataBinder.
+     *
+     * @param binder    WebDataBinder
+     */
+    @InitBinder
+    public void dataBinding(WebDataBinder binder) {
+        binder.addValidators(teapotValidator);
+    }
+
+    /**
      * Handles {@link TeapotAlreadyExistsException}.
      *
-     * @param httpResponse    HTTP Servlet Response
-     * @param exception       exception
+     * @param exception    exception
      *
-     * @throws IOException
-     *      never thrown
+     * @return response entity
      */
-    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(TeapotAlreadyExistsException.class)
-    public void handleTeapotAlreadyExistsException(
-            HttpServletResponse httpResponse,
-            TeapotAlreadyExistsException exception) throws IOException {
-        httpResponse.getWriter().write(exception.getMessage());
+    public ResponseEntity<String> handleTeapotAlreadyExistsException(
+            TeapotAlreadyExistsException exception) {
+        return new ResponseEntity<String>(
+                exception.getMessage(),
+                HttpStatus.CONFLICT);
     }
 
     /**
      * Handles {@link TeapotNotExistsException}.
      *
-     * @param httpResponse    HTTP Servlet Response
-     * @param exception       exception
+     * @param exception    exception
      *
-     * @throws IOException
-     *      never thrown
+     * @return response entity
      */
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(TeapotNotExistsException.class)
-    public void handleTeapotNotExistsException(
-            HttpServletResponse httpResponse,
-            TeapotNotExistsException exception) throws IOException {
-        httpResponse.getWriter().write(exception.getMessage());
+    public ResponseEntity<String> handleTeapotNotExistsException(
+            TeapotNotExistsException exception) {
+        return new ResponseEntity<String>(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND);
     }
 
     /**
      * Handles {@link TeapotsAlreadyExistException}.
      *
-     * @param httpResponse    HTTP Servlet Response
-     * @param exception       exception
+     * @param exception    exception
      *
-     * @throws IOException
-     *      never thrown
+     * @return response entity
      */
-    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(TeapotsAlreadyExistException.class)
-    public void handleTeapotsAlreadyExistException(
-            HttpServletResponse httpResponse,
-            TeapotsAlreadyExistException exception) throws IOException {
-        httpResponse.getWriter().write(exception.getMessage());
+    public ResponseEntity<String> handleTeapotsAlreadyExistException(
+            TeapotsAlreadyExistException exception) {
+        return new ResponseEntity<String>(
+                exception.getMessage(),
+                HttpStatus.CONFLICT);
     }
 
     /**
      * Handles {@link TeapotsNotExistException}.
      *
-     * @param httpResponse    HTTP Servlet Response
-     * @param exception       exception
+     * @param exception    exception
      *
-     * @throws IOException
-     *      never thrown
+     * @return response entity
      */
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(TeapotsNotExistException.class)
-    public void handleTeapotsNotExistException(
-            HttpServletResponse httpResponse,
-            TeapotsNotExistException exception) throws IOException {
-        httpResponse.getWriter().write(exception.getMessage());
+    public ResponseEntity<String> handleTeapotsNotExistException(
+            TeapotsNotExistException exception) {
+        return new ResponseEntity<String>(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Handles validation errors.
+     *
+     * @param exception    exception
+     *
+     * @return response entity
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationExeption(
+            MethodArgumentNotValidException exception) {
+        StringBuilder sb = new StringBuilder("Validation errors:");
+
+        for (ObjectError error : exception.getBindingResult().getAllErrors()) {
+            sb.append("\n\t- ").append(error.getDefaultMessage());
+        }
+
+        return new ResponseEntity<String>(
+                sb.toString(),
+                HttpStatus.BAD_REQUEST);
     }
 
 }

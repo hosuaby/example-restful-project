@@ -10,7 +10,7 @@ public class TeapotAlreadyExistsException extends Exception {
     /**
      * When teapot with defined id already exists.
      */
-    private static final String ERR_TEAPOT_WITH_ID_ALREADY_EXISTS = "Teapot with id %s already exists";
+    private static final String ERR_TEAPOT_WITH_ID_ALREADY_EXISTS = "Teapot with id \"%s\" already exists";
 
     /**
      * Serial ID.

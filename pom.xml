@@ -27,6 +27,7 @@
         <spring-data.version>1.4.1.RELEASE</spring-data.version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <springfox.version>2.0.0</springfox.version>
+        <javax.el.version>3.0.1-b04</javax.el.version>
     </properties>
 
     <repositories>
@@ -78,6 +79,10 @@
                     <artifactId>javax.el</artifactId>
                     <groupId>org.glassfish</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -94,11 +99,30 @@
             <version>${spring-data.version}</version>
         </dependency>
 
+        <!-- Hibernate Validator -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <!-- Javax EL for validator -->
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>${javax.el.version}</version>
+        </dependency>
+
         <!-- Springfox (Swagger) -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${springfox.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>classmate</artifactId>
+                    <groupId>com.fasterxml</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

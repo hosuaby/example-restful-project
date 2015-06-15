@@ -7,8 +7,6 @@ import java.util.stream.Stream;
 
 /**
  * Exception thrown when user tries to add teapots that already exist.
- *
- * @author Alexei KLENIN
  */
 public class TeapotsAlreadyExistException extends Exception {
 

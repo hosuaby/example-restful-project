@@ -11,8 +11,6 @@ import java.util.Collection;
 /**
  * Provides methods for CRUD operations and remote control operations on
  * teapots.
- *
- * @author Alexei KLENIN
  */
 public interface TeapotCRUDService {
 

@@ -1,9 +1,9 @@
 package io.hosuaby.restful.domain;
 
+import java.net.Inet4Address;
+
 /**
  * Just a teapot.
- *
- * @author Alexei KLENIN
  */
 public class Teapot {
 
@@ -42,6 +42,9 @@ public class Teapot {
 
     /** Volume: from defined values */
     private float volume;
+
+    /** Current IP address. Must be hidden from the web user */
+    private Inet4Address ip;
 
     public Teapot() {
         super();
@@ -85,6 +88,14 @@ public class Teapot {
 
     public void setVolume(float volume) {
         this.volume = volume;
+    }
+
+    public Inet4Address getIp() {
+        return ip;
+    }
+
+    public void setIp(Inet4Address ip) {
+        this.ip = ip;
     }
 
 }

@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
  * Map based repository for teapots. No exceptions are thrown at the repository
  * level. This repository is not thread safe. Thread safe must be assured at
  * service layer.
- *
- * @author Alexei KLENIN
  */
 @Repository
 public class TeapotRepository implements CrudRepository<Teapot, String> {

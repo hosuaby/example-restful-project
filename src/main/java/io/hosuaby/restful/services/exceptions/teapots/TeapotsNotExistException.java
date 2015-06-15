@@ -7,8 +7,6 @@ import java.util.stream.Stream;
 
 /**
  * Exception thrown when one or many asked teapots not exist.
- *
- * @author Alexei KLENIN
  */
 public class TeapotsNotExistException extends Exception {
 

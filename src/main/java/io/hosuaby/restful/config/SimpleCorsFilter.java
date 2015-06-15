@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Simple CORS filter that autorizes all origins. Because Undertow don't have
  * one.
- *
- * @author Alexei KLENIN
  */
 public class SimpleCorsFilter implements Filter {
 

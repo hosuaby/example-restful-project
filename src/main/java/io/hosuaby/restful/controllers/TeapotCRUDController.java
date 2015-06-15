@@ -1,6 +1,8 @@
 package io.hosuaby.restful.controllers;
 
 import io.hosuaby.restful.domain.Teapot;
+import io.hosuaby.restful.mappers.TeapotMapper;
+import io.hosuaby.restful.mappings.TeapotMapping;
 import io.hosuaby.restful.services.TeapotCRUDService;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotAlreadyExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotExistsException;
@@ -25,16 +27,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for CRUD operations of teapots.
- *
- * @author Alexei KLENIN
  */
 @RestController
 @RequestMapping("/crud/teapots")
 public class TeapotCRUDController {
 
-    /**
-     * Default teapots to fill repository.
-     */
+    /** Default teapots to fill repository */
     private static final Set<Teapot> TEAPOTS = new HashSet<Teapot>() {
         private static final long serialVersionUID = 1L;
         {
@@ -44,11 +42,13 @@ public class TeapotCRUDController {
         }
     };
 
-    /**
-     * Teapot CRUD service.
-     */
+    /** Teapot CRUD service */
     @Autowired
     private TeapotCRUDService crud;
+
+    /** Teapot mapper */
+    @Autowired
+    private TeapotMapper mapper;
 
     /**
      * Returns all existing teapots. If ids parameter is defined returns teapots
@@ -56,7 +56,7 @@ public class TeapotCRUDController {
      *
      * @param ids    teapot ids (optional)
      *
-     * @return found teapots
+     * @return collection of mappings of found teapots
      *
      * @throws TeapotsNotExistException
      *      when any of defined teapots was not found
@@ -64,12 +64,13 @@ public class TeapotCRUDController {
     @RequestMapping(
             value = "/",
             method = RequestMethod.GET)
-    public Collection<Teapot> findAll(@RequestParam(required = false) String[] ids)
-            throws TeapotsNotExistException {
+    public Collection<TeapotMapping> findAll(
+            @RequestParam(required = false) String[] ids)
+                    throws TeapotsNotExistException {
         if (ids != null) {
-            return crud.findAll(ids);
+            return mapper.toMappings(crud.findAll(ids));
         } else {
-            return crud.findAll();
+            return mapper.toMappings(crud.findAll());
         }
     }
 
@@ -78,7 +79,7 @@ public class TeapotCRUDController {
      *
      * @param id    teapot id
      *
-     * @return teapot
+     * @return teapot mapping {@link TeapotMapping}
      *
      * @throws TeapotNotExistsException
      *      when teapot was not found
@@ -86,9 +87,9 @@ public class TeapotCRUDController {
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.GET)
-    public Teapot find(@PathVariable String id)
+    public TeapotMapping find(@PathVariable String id)
             throws TeapotNotExistsException {
-        return crud.find(id);
+        return mapper.toMapping(crud.find(id));
     }
 
     /**
@@ -121,7 +122,7 @@ public class TeapotCRUDController {
     /**
      * Adds a new teapot.
      *
-     * @param teapot    teapot
+     * @param teapotMapping    teapot mapping
      *
      * @throws TeapotAlreadyExistsException
      *      when teapot with same id already exists
@@ -131,16 +132,16 @@ public class TeapotCRUDController {
             method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody @Valid Teapot teapot)
+    public void add(@RequestBody @Valid TeapotMapping teapotMapping)
             throws TeapotAlreadyExistsException {
-        crud.add(teapot);
+        crud.add(mapper.fromMapping(teapotMapping));
     };
 
     /**
      * Replaces teapot found by id by a new one.
      *
-     * @param id        id of the teapot to replace
-     * @param teapot    new teapot
+     * @param id               id of the teapot to replace
+     * @param teapotMapping    teapot mapping
      *
      * @throws TeapotNotExistsException
      *      when teapot to replace was not found
@@ -154,9 +155,11 @@ public class TeapotCRUDController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(
             @PathVariable String id,
-            @RequestBody @Valid Teapot teapot)
+            @RequestBody @Valid TeapotMapping teapotMapping)
                     throws TeapotNotExistsException,
                         TeapotAlreadyExistsException {
+        Teapot teapot = crud.find(id);
+        mapper.fromMapping(teapotMapping, teapot);
         crud.update(id, teapot);
     }
 

@@ -2,8 +2,6 @@ package io.hosuaby.restful.services.exceptions.teapots;
 
 /**
  * Exception thrown when user tries to add teapot that already exists.
- *
- * @author Alexei KLENIN
  */
 public class TeapotAlreadyExistsException extends Exception {
 

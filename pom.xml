@@ -28,6 +28,10 @@
         <servlet-api.version>3.1.0</servlet-api.version>
         <springfox.version>2.0.0</springfox.version>
         <javax.el.version>3.0.1-b04</javax.el.version>
+        <org.mapstruct.version>1.0.0.CR1</org.mapstruct.version>
+
+        <!-- Maven plugin versions -->
+        <maven-processor-plugin.version>2.2.4</maven-processor-plugin.version>
     </properties>
 
     <repositories>
@@ -112,6 +116,13 @@
             <version>${javax.el.version}</version>
         </dependency>
 
+        <!-- MapStruct for mappings -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-jdk8</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
         <!-- Springfox (Swagger) -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -128,6 +139,42 @@
 
     <build>
         <plugins>
+
+            <!-- Maven processor to generate MapStruct mappers -->
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>${maven-processor-plugin.version}</version>
+                <configuration>
+                    <defaultOutputDirectory>
+                        ${project.build.directory}/generated-sources
+                    </defaultOutputDirectory>
+                    <processors>
+                        <processor>org.mapstruct.ap.MappingProcessor</processor>
+                    </processors>
+                    <options>
+                        <mapstruct.suppressGeneratorTimestamp>true</mapstruct.suppressGeneratorTimestamp>
+                        <mapstruct.suppressGeneratorVersionInfoComment>true</mapstruct.suppressGeneratorVersionInfoComment>
+                        <mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
+                    </options>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>process</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>${org.mapstruct.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 
             <!-- Package as an executable jar -->
             <plugin>

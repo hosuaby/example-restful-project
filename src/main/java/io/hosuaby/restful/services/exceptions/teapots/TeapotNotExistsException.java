@@ -4,8 +4,6 @@ import io.hosuaby.restful.domain.Teapot;
 
 /**
  * Exception thrown when asked teapot doesn't exist.
- *
- * @author Alexei KLENIN
  */
 public class TeapotNotExistsException extends Exception {
 

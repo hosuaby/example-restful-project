@@ -12,8 +12,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Main application class.
- *
- * @author Alexei KLENIN
  */
 @SpringBootApplication
 @EnableSwagger2                 // enable Swagger

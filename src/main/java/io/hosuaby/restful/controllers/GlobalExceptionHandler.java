@@ -2,6 +2,8 @@ package io.hosuaby.restful.controllers;
 
 import io.hosuaby.restful.domain.validators.TeapotMappingValidator;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotAlreadyExistsException;
+import io.hosuaby.restful.services.exceptions.teapots.TeapotInternalErrorException;
+import io.hosuaby.restful.services.exceptions.teapots.TeapotNotConnectedException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotsAlreadyExistException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotsNotExistException;
@@ -15,12 +17,18 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Exception handler for all controllers.
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * Internal server error message.
+     */
+    private static final String ERR_INTERNAL_SERVER_ERROR = "Internalm server error";
 
     /**
      * Teapot validator.
@@ -99,6 +107,21 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handles {@link TeapotNotConnectedException}.
+     *
+     * @param exception    exception
+     *
+     * @return response entity
+     */
+    @ExceptionHandler(TeapotNotConnectedException.class)
+    public ResponseEntity<String> handleTeapotNotConnectedException(
+            TeapotNotConnectedException exception) {
+        return new ResponseEntity<String>(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND);
+    }
+
+    /**
      * Handles validation errors.
      *
      * @param exception    exception
@@ -118,5 +141,29 @@ public class GlobalExceptionHandler {
                 sb.toString(),
                 HttpStatus.BAD_REQUEST);
     }
+
+    /**
+     * Handles internal teapot errors provoked by unsupported command.
+     *
+     * @param exception    exception
+     *
+     * @return response entity
+     */
+    @ExceptionHandler(TeapotInternalErrorException.class)
+    public ResponseEntity<String> handleTeapotInternalErrorException(
+            TeapotInternalErrorException exception) {
+        return new ResponseEntity<String>(
+                exception.getMessage(),
+                HttpStatus.I_AM_A_TEAPOT);  // I am a teapot!
+    }
+
+    /**
+     * Default handler for unhandled exceptions.
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(
+            value = HttpStatus.INTERNAL_SERVER_ERROR,
+            reason = ERR_INTERNAL_SERVER_ERROR)
+    public void handleOtherExceptions() {}
 
 }

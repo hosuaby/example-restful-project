@@ -1,5 +1,6 @@
 package io.hosuaby.restful.config;
 
+import io.hosuaby.restful.repositories.WebSocketSessionRepository;
 import io.hosuaby.restful.websocket.handlers.ConsoleHandler;
 import io.hosuaby.restful.websocket.handlers.NotificationHandler;
 import io.hosuaby.restful.websocket.handlers.TeapotHandler;
@@ -60,6 +61,14 @@ public class WebSocketConfig implements WebSocketConfigurer {
     }
 
     /**
+     * @return repository for sessions of teapots.
+     */
+    @Bean(name = "teapotSessionsRepository")
+    public WebSocketSessionRepository teapotSessionsRepository() {
+        return new WebSocketSessionRepository();
+    }
+
+    /**
      * Handshake interceptor that copies URI template variables to attributes
      * of the WebSocket session. Working together with SimpleUrlHandlerMapping
      * of Spring MVC that copy path variables into attributes of the
@@ -73,7 +82,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
                 ServerHttpResponse response, WebSocketHandler wsHandler,
                 Map<String, Object> attributes) throws Exception {
 
-            /* Retrieve original Http request */
+            /* Retrieve original HTTP request */
             HttpServletRequest origRequest =
                     ((ServletServerHttpRequest) request).getServletRequest();
 

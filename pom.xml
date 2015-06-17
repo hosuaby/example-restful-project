@@ -96,6 +96,12 @@
             <artifactId>spring-websocket</artifactId>
         </dependency>
 
+        <!-- Spring messaging for websocket communication -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+        </dependency>
+
         <!-- Spring Data just for CrudRepository interface -->
         <dependency>
             <groupId>org.springframework.data</groupId>

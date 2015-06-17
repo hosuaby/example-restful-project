@@ -1,4 +1,4 @@
-package io.hosuaby.restful.config;
+package io.hosuaby.restful;
 
 import java.io.IOException;
 
@@ -10,10 +10,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Simple CORS filter that autorizes all origins. Because Undertow don't have
  * one.
  */
+@Component
 public class SimpleCorsFilter implements Filter {
 
     /** {@inheritDoc}} */

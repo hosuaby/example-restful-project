@@ -2,7 +2,7 @@ package io.hosuaby.restful.controllers;
 
 import io.hosuaby.restful.PortHolder;
 import io.hosuaby.restful.domain.Teapot;
-import io.hosuaby.restful.services.TeapotCRUDService;
+import io.hosuaby.restful.services.TeapotCrudService;
 import io.hosuaby.restful.services.TeapotCommandService;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotConnectedException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotExistsException;
@@ -32,7 +32,7 @@ public class TeapotCommandController {
 
     /** Teapot CRUD service */
     @Autowired
-    private TeapotCRUDService crud;
+    private TeapotCrudService crud;
 
     /** Teapot command service */
     @Autowired

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * Implementation of {@TeapotService} interface.
  */
 @Service
-public class TeapotCRUDServiceImpl implements TeapotCRUDService {
+public class TeapotCrudServiceImpl implements TeapotCrudService {
 
     /**
      * Teapot repository.

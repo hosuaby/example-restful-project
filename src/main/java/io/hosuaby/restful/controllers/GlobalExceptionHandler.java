@@ -1,6 +1,6 @@
 package io.hosuaby.restful.controllers;
 
-import io.hosuaby.restful.domain.validators.TeapotMappingValidator;
+import io.hosuaby.restful.domain.validators.TeapotValidator;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotAlreadyExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotInternalErrorException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotConnectedException;
@@ -34,10 +34,10 @@ public class GlobalExceptionHandler {
      * Teapot validator.
      */
     @Autowired
-    private TeapotMappingValidator teapotValidator;
+    private TeapotValidator teapotValidator;
 
     /**
-     * Adds {@link TeapotMappingValidator} to WebDataBinder.
+     * Adds {@link TeapotValidator} to WebDataBinder.
      *
      * @param binder    WebDataBinder
      */

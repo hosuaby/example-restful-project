@@ -3,7 +3,7 @@ package io.hosuaby.restful.controllers;
 import io.hosuaby.restful.domain.Teapot;
 import io.hosuaby.restful.mappers.TeapotMapper;
 import io.hosuaby.restful.mappings.TeapotMapping;
-import io.hosuaby.restful.services.TeapotCRUDService;
+import io.hosuaby.restful.services.TeapotCrudService;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotAlreadyExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotsNotExistException;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/crud/teapots")
-public class TeapotCRUDController {
+public class TeapotCrudController {
 
     /** Default teapots to fill repository */
     private static final Set<Teapot> TEAPOTS = new HashSet<Teapot>() {
@@ -44,7 +44,7 @@ public class TeapotCRUDController {
 
     /** Teapot CRUD service */
     @Autowired
-    private TeapotCRUDService crud;
+    private TeapotCrudService crud;
 
     /** Teapot mapper */
     @Autowired
@@ -56,7 +56,7 @@ public class TeapotCRUDController {
      *
      * @param ids    teapot ids (optional)
      *
-     * @return collection of mappings of found teapots
+     * @return collection of teapots
      *
      * @throws TeapotsNotExistException
      *      when any of defined teapots was not found
@@ -64,13 +64,14 @@ public class TeapotCRUDController {
     @RequestMapping(
             value = "/",
             method = RequestMethod.GET)
-    public Collection<TeapotMapping> findAll(
+    @Mapped
+    public Collection<Teapot> findAll(
             @RequestParam(required = false) String[] ids)
                     throws TeapotsNotExistException {
         if (ids != null) {
-            return mapper.toMappings(crud.findAll(ids));
+            return crud.findAll(ids);
         } else {
-            return mapper.toMappings(crud.findAll());
+            return crud.findAll();
         }
     }
 
@@ -79,7 +80,7 @@ public class TeapotCRUDController {
      *
      * @param id    teapot id
      *
-     * @return teapot mapping {@link TeapotMapping}
+     * @return found teapot
      *
      * @throws TeapotNotExistsException
      *      when teapot was not found
@@ -87,9 +88,10 @@ public class TeapotCRUDController {
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.GET)
-    public TeapotMapping find(@PathVariable String id)
+    @Mapped
+    public Teapot find(@PathVariable String id)
             throws TeapotNotExistsException {
-        return mapper.toMapping(crud.find(id));
+        return crud.find(id);
     }
 
     /**
@@ -122,7 +124,7 @@ public class TeapotCRUDController {
     /**
      * Adds a new teapot.
      *
-     * @param teapotMapping    teapot mapping
+     * @param teapot    new teapot
      *
      * @throws TeapotAlreadyExistsException
      *      when teapot with same id already exists
@@ -132,9 +134,9 @@ public class TeapotCRUDController {
             method = RequestMethod.POST,
             consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestBody @Valid TeapotMapping teapotMapping)
+    public void add(@RequestBody @Mapped @Valid Teapot teapot)
             throws TeapotAlreadyExistsException {
-        crud.add(mapper.fromMapping(teapotMapping));
+        crud.add(teapot);
     };
 
     /**
@@ -153,14 +155,25 @@ public class TeapotCRUDController {
             value = "/{id}",
             method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    // TODO: This method has too much boilerplate. Think how to make update
+    //       from mapping object more elegant.
     public void update(
             @PathVariable String id,
-            @RequestBody @Valid TeapotMapping teapotMapping)
+            @RequestBody @Mapped @Valid Teapot newTeapot)
                     throws TeapotNotExistsException,
                         TeapotAlreadyExistsException {
-        Teapot teapot = crud.find(id);
-        mapper.fromMapping(teapotMapping, teapot);
-        crud.update(id, teapot);
+
+        /* Transform teapot back to mapping */
+        // TODO: sorry it's really ugly
+        TeapotMapping mapping = mapper.toMapping(newTeapot);
+
+        Teapot oldTeapot = crud.find(id);
+
+        /* Update old teapot */
+        mapper.fromMapping(mapping, oldTeapot);
+
+        /* Save teapot */
+        crud.update(id, oldTeapot);
     }
 
     /**

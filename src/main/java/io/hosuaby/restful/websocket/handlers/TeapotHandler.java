@@ -2,7 +2,7 @@ package io.hosuaby.restful.websocket.handlers;
 
 import io.hosuaby.restful.domain.Teapot;
 import io.hosuaby.restful.domain.TeapotMessage;
-import io.hosuaby.restful.services.TeapotCRUDService;
+import io.hosuaby.restful.services.TeapotCrudService;
 import io.hosuaby.restful.services.TeapotCommandService;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotAlreadyExistsException;
 import io.hosuaby.restful.services.exceptions.teapots.TeapotNotExistsException;
@@ -35,7 +35,7 @@ public class TeapotHandler extends TextWebSocketHandler {
 
     /** Teapot CRUD service */
     @Autowired
-    private TeapotCRUDService crud;
+    private TeapotCrudService crud;
 
     /** Teapot command service */
     @Autowired

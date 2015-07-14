@@ -1,7 +1,6 @@
 package io.hosuaby.restful.domain.validators;
 
 import io.hosuaby.restful.domain.Teapot;
-import io.hosuaby.restful.mappings.TeapotMapping;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;
@@ -13,10 +12,10 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- * Teapot mapping validator.
+ * Teapot validator.
  */
 @Component
-public class TeapotMappingValidator implements Validator {
+public class TeapotValidator implements Validator {
 
     /**
      * Pattern for teapot id. Id must start with letter and can contain letter,
@@ -45,15 +44,15 @@ public class TeapotMappingValidator implements Validator {
             + StringUtils.arrayToDelimitedString(VALID_VOLUMES, ", ");
 
     /**
-     * Supports only {@link TeapotMapping} objects;
+     * Supports only {@link Teapot} objects;
      */
     @Override
     public boolean supports(Class<?> clazz) {
-        return TeapotMapping.class.equals(clazz);
+        return Teapot.class.equals(clazz);
     }
 
     /**
-     * Validates or rejects the {@link TeapotMapping} object.
+     * Validates or rejects the {@link Teapot} object.
      */
     @Override
     public void validate(Object obj, Errors errors) {
@@ -66,15 +65,15 @@ public class TeapotMappingValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(
                 errors, "name", "errNameUndefined", ERR_NAME_UNDEFINED);
 
-        TeapotMapping mapping = (TeapotMapping) obj;
+        Teapot teapot = (Teapot) obj;
 
         /* Check id against pattern */
-        if (!ID_PATTERN.matcher(mapping.getId()).matches()) {
+        if (!ID_PATTERN.matcher(teapot.getId()).matches()) {
             errors.rejectValue("id", "errIdBadFormat", ERR_ID_BAD_FORMAT);
         }
 
         /* Check if volume is in the list of valid volumes */
-        if (!Arrays.asList(VALID_VOLUMES).contains(mapping.getVolume())) {
+        if (!Arrays.asList(VALID_VOLUMES).contains(teapot.getVolume())) {
             errors.rejectValue("volume", "errBadVolume", ERR_BAD_VOLUME);
         }
     }

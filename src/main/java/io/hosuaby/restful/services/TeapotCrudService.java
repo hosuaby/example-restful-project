@@ -12,7 +12,7 @@ import java.util.Collection;
  * Provides methods for CRUD operations and remote control operations on
  * teapots.
  */
-public interface TeapotCRUDService {
+public interface TeapotCrudService {
 
     /**
      * Returns teapot found by it's id.

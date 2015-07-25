@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
  * one.
  */
 @Component
+// TODO: check CORS filter of Spring MVC
 public class SimpleCorsFilter implements Filter {
 
     /** {@inheritDoc}} */

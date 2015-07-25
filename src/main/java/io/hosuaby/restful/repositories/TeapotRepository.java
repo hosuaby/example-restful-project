@@ -21,7 +21,7 @@ public class TeapotRepository implements CrudRepository<Teapot, String> {
     /**
      * Map store for the teapots.
      */
-    Map<String, Teapot> teapotStore;
+    private Map<String, Teapot> teapotStore;
 
     /**
      * Default constructor.

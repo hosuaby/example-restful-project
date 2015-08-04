@@ -2,9 +2,12 @@ package io.hosuaby.restful.domain;
 
 import java.net.Inet4Address;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Just a teapot.
  */
+@Document(collection = "teapots")
 public class Teapot {
 
     /** 0.3 L */

@@ -15,12 +15,27 @@
         with Spring.
     </description>
 
+    <!-- TODO: use more starters instead of bare dependencies -->
+
     <repositories>
 
         <!-- Spring milestone repository -->
         <repository>
             <id>spring-milestones</id>
             <url>http://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <!-- Spring snapshot repository -->
+        <repository>
+            <id>repository.springsource.snapshot</id>
+            <name>SpringSource Snapshot Repository</name>
+            <url>http://repo.springsource.org/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
 
         <!-- Springfox repository -->
@@ -40,11 +55,12 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-data.version>1.4.1.RELEASE</spring-data.version>
         <servlet-api.version>3.1.0</servlet-api.version>
         <springfox.version>2.0.0</springfox.version>
         <javax.el.version>3.0.1-b04</javax.el.version>
         <org.mapstruct.version>1.0.0.CR1</org.mapstruct.version>
+
+        <spring-data-releasetrain.version>Gosling-BUILD-SNAPSHOT</spring-data-releasetrain.version>
 
         <!-- Maven plugin versions -->
         <maven-processor-plugin.version>2.2.4</maven-processor-plugin.version>
@@ -108,11 +124,10 @@
             <artifactId>spring-messaging</artifactId>
         </dependency>
 
-        <!-- Spring Data just for CrudRepository interface -->
+        <!-- Spring Data for MongoDB -->
         <dependency>
             <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons-core</artifactId>
-            <version>${spring-data.version}</version>
+            <artifactId>spring-data-mongodb</artifactId>
         </dependency>
 
         <!-- Hibernate Validator -->

@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Creates simulator of teapot that communicates with server via websocket.
  */
+// TODO: get port from environment instead use of PortHolder
 public class TeapotSimulator {
 
     /** EOF character */

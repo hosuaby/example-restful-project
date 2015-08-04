@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     /**
      * Internal server error message.
      */
-    private static final String ERR_INTERNAL_SERVER_ERROR = "Internalm server error";
+    private static final String ERR_INTERNAL_SERVER_ERROR = "Internal server error";
 
     /**
      * Teapot validator.
@@ -162,8 +162,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(
-            value = HttpStatus.INTERNAL_SERVER_ERROR,
+            code = HttpStatus.INTERNAL_SERVER_ERROR,
             reason = ERR_INTERNAL_SERVER_ERROR)
-    public void handleOtherExceptions() {}
+    public void handleOtherExceptions(Exception exception) {
+        // TODO: replace by logger
+        exception.printStackTrace();
+    }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
  * Implementation of {@TeapotService} interface.
  */
 @Service
+// TODO: Add necessary mechanisms for thread safety
 public class TeapotCrudServiceImpl implements TeapotCrudService {
 
     /**
@@ -39,12 +40,7 @@ public class TeapotCrudServiceImpl implements TeapotCrudService {
     /** {@inheritDoc} */
     @Override
     public Collection<Teapot> findAll() {
-        Iterable<Teapot> iterable = teapotRepository.findAll();
-        Collection teapots = new HashSet<Teapot>();
-
-        iterable.forEach(teapot -> teapots.add(teapot));
-
-        return teapots;
+        return teapotRepository.findAll();
     }
 
     /** {@inheritDoc} */

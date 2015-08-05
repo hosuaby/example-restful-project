@@ -15,8 +15,6 @@
         with Spring.
     </description>
 
-    <!-- TODO: use more starters instead of bare dependencies -->
-
     <repositories>
 
         <!-- Spring milestone repository -->
@@ -112,22 +110,16 @@
             </exclusions>
         </dependency>
 
-        <!-- Spring websocket -->
+        <!-- Starter for websocket -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
-        <!-- Spring messaging for websocket communication -->
+        <!-- Starter for MongoDB -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-messaging</artifactId>
-        </dependency>
-
-        <!-- Spring Data for MongoDB -->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
         <!-- Hibernate Validator -->

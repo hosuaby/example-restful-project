@@ -32,10 +32,9 @@ Demo runs on [Heroku](https://www.heroku.com/).
 Find Swagger UI [here](http://petstore.swagger.io/?url=https://example-restful-project.herokuapp.com/v2/api-docs).
 
 ## Run it locally
-To run application locally you need to have Java 8, Maven 3, Docker & docker-compose installed.  
+To run application locally you need to have `Docker` & `docker-compose` installed.  
 Execute instructions:
 ```sh
 git clone git@github.com:hosuaby/example-restful-project.git
-mvn install
 docker-compose up -d
 ```

@@ -19,12 +19,23 @@ Now runs on Heroku, later will be able to run on Cloud Foundry.
 ## Features
 - Java 8
 - Pure Java-based configuration
-- Spring Boot(on Undertow 1.1.3)
+- Spring Boot(on Undertow)
 - Spring MVC (Restful)
 - Spring WebSocket
 - Springfox (Swagger)
+- MongoDB
 - Cloud oriented (Heroku)
+- Docker
 
 ## Demo
 Demo runs on [Heroku](https://www.heroku.com/).  
 Find Swagger UI [here](http://petstore.swagger.io/?url=https://example-restful-project.herokuapp.com/v2/api-docs).
+
+## Run it locally
+To run application locally you need to have Java 8, Maven 3, Docker & docker-compose installed.  
+Execute instructions:
+```sh
+git clone git@github.com:hosuaby/example-restful-project.git
+mvn install
+docker-compose up -d
+```

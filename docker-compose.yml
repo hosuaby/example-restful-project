@@ -1,10 +1,17 @@
 web:
     build: .
     ports:
-        - "8081:80"
+        - "8080:8080"
+    volumes:
+        - ".:/project"
     links:
         - db
 db:
     image: mongo:3.1
     ports:
-        - "27027:27017"
+        - "27017:27017"
+sonar:
+    image: sonarqube
+    ports:
+        - "9000:9000"
+        - "9092:9092"

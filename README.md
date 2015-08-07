@@ -38,3 +38,6 @@ Execute instructions:
 git clone git@github.com:hosuaby/example-restful-project.git
 docker-compose up -d
 ```
+Web server is accessible on port `8080` and mongo on `27017` of `localhost`.
+You can modify the source code in your IDE and save it. If Automatic Build is
+enabled project will be automatically rebuilt and reloaded in the container.

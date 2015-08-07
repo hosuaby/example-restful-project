@@ -221,6 +221,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Option 'fork' enables automatic reloads when project
+                         is started with 'mvn spring-boot:run' -->
+                    <fork>true</fork>
+                </configuration>
             </plugin>
         </plugins>
     </build>

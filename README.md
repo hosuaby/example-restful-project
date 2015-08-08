@@ -31,13 +31,21 @@ Now runs on Heroku, later will be able to run on Cloud Foundry.
 Demo runs on [Heroku](https://www.heroku.com/).  
 Find Swagger UI [here](http://petstore.swagger.io/?url=https://example-restful-project.herokuapp.com/v2/api-docs).
 
-## Run it locally
-To run application locally you need to have `Docker` & `docker-compose` installed.  
-Execute instructions:
+## Create self-contained distribution
+To create Docker image with Java, application binaries and MongoDB ready to run do :
 ```sh
-git clone git@github.com:hosuaby/example-restful-project.git
-docker-compose up -d
+docker build -t hosuaby/restful .
+```
+After launch it :
+```sh
+docker run --name restful -d -p 8080:8080 -p 27017:27017 hosuaby/restful
 ```
 Web server is accessible on port `8080` and mongo on `27017` of `localhost`.
+
+## Development environment
+Development environment is also provided as docker containers. To setup it run :
+```sh
+docker-compose up -d
+```
 You can modify the source code in your IDE and save it. If Automatic Build is
-enabled project will be automatically rebuilt and reloaded in the container.
+enabled project will be automatically rebuilt and reloaded within container.

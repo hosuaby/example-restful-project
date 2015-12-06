@@ -22,7 +22,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  */
 @Configuration
 // TODO: Create new bean that listens application context
-public class WebMvcConfig extends WebMvcConfigurationSupport implements ApplicationListener {
+public class WebMvcConfig extends WebMvcConfigurationSupport
+        implements ApplicationListener {
 
     /** Teapot mapper */
     @Autowired

@@ -143,7 +143,7 @@ public class TeapotCrudController {
      * Replaces teapot found by id by a new one.
      *
      * @param id               id of the teapot to replace
-     * @param teapotMapping    teapot mapping
+     * @param updatedTeapot    teapot mapping
      *
      * @throws TeapotNotExistsException
      *      when teapot to replace was not found
@@ -157,15 +157,17 @@ public class TeapotCrudController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     // TODO: This method has too much boilerplate. Think how to make update
     //       from mapping object more elegant.
+    // TODO: do not use put when transfering mappings between client and server.
+    //       use patch instead
     public void update(
             @PathVariable String id,
-            @RequestBody @Mapped @Valid Teapot newTeapot)
+            @RequestBody @Mapped @Valid Teapot updatedTeapot)
                     throws TeapotNotExistsException,
                         TeapotAlreadyExistsException {
 
         /* Transform teapot back to mapping */
         // TODO: sorry it's really ugly
-        TeapotMapping mapping = mapper.toMapping(newTeapot);
+        TeapotMapping mapping = mapper.toMapping(updatedTeapot);
 
         Teapot oldTeapot = crud.find(id);
 

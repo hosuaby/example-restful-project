@@ -169,6 +169,14 @@
             </exclusions>
         </dependency>
 
+        <!-- Fluent POJO builder for tests -->
+        <dependency>
+            <groupId>io.hosuaby</groupId>
+            <artifactId>cakemold</artifactId>
+            <version>0.0.1</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Devtools for authomatic reloads -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -42,6 +42,12 @@
             <name>jcenter</name>
             <url>https://jcenter.bintray.com/</url>
         </repository>
+
+        <!-- CaceMold -->
+        <repository>
+            <id>bintray</id>
+            <url>https://dl.bintray.com/hosuaby/CakeMold</url>
+        </repository>
     </repositories>
 
     <!-- Inherit defaults from Spring Boot -->
